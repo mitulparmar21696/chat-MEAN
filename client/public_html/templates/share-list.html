@@ -1,0 +1,296 @@
+<div data-ng-controller="shareSpaceList">
+    <div data-ng-init="init()" class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 well ">
+                <h4 class="title text-center" style="font-size:30px;">Space List</h4>
+            </div>
+        </div>
+        <!--        <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Address</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="space in spaceShareListOpp.spaceList">
+                            <td><a data-ng-click="viewModel(space)">{{space.aboutCoworking}}</a></td>
+                            <td>{{space.spaceType.name}}</td>
+                            <td>{{space.address}}</td>
+                            <td class="text-center form-group"><span class="form-group " style="margin-right: 10px;"><i class="fa fa-edit"></i></span>
+                                <span class="form-group"><i class="fa fa-trash-o" data-ng-click="deleteSpace(space, $index)"></i></span></td>
+                        </tr>
+                    </tbody>
+                </table>-->
+        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 form-group">
+            <div class="col-lg-3 col-md-6 col-sm-12" data-ng-repeat="space in spaceShareListOpp.spaceList">
+                <div class="card">
+                    <h5 ><a data-ng-click="viewModel(space)">{{space.aboutCoworking}}</a></h5>
+                    <p class="title">{{space.spaceType.name}}</p>
+                    <p>{{space.address}}</p>
+                    <p><button style="  border: none;
+                               outline: 0;
+                               display: inline-block;
+                               padding: 8px;
+                               color: white;
+                               background-color: #000;
+                               text-align: center;
+                               cursor: pointer;
+                               width: 100%;
+                               font-size: 18px;" data-ng-click="registerSpaceModal(space)">Register</button></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ViewSpace" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal Detil content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    Details
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <i style="color: #ce8483 !important" class="fa fa-map-marker"></i>&nbsp;<span class="form-group" data-ng-bind="spaceShareListOpp.spaceView.aboutCoworking"></span><br/>
+                            <span class="title" data-ng-bind="spaceShareListOpp.spaceView.address"></span><br/>
+                            <span data-ng-repeat="data in myArray">
+                                <img src="data:image/jpeg;base64,{{data.b64}}" height="50" width="50">
+                            </span>
+                        </div>
+
+                        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label>Space Details:</label><br/>
+                                <span class="title" data-ng-bind="spaceShareListOpp.spaceView.workSpaceDetail"></span>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="overflow-x: auto;">
+                                        <table class="table table-hover" >
+                                            <tr>
+                                                <th></th>
+                                                <th>Quantity</th>
+                                                <th>Capacity of persons(Per 1 quantity)</th>
+                                                <th>M2(Per 1 quantity)</th>
+                                                <th>Tarif per hour(All taxes included)</th>
+                                                <th>Tarif per half day(All taxes included)</th>
+                                                <th>Tarif per day(All taxes included)</th>
+                                                <th>Tarif per month(All taxes included)</th>
+                                            </tr>
+                                            <tr ng-repeat="data in spaceShareListOpp.spaceView.categoryOfSpace" style="height: 10%; overflow-y: auto ">
+                                                <td>
+                                                    <input type="text" class="form-control" name="jobCompensation" disabled      data-ng-model="data.categoryOfSpace">
+                                                </td>
+                                                <td>
+                                                    <input type="number" disabled class="form-control" data-ng-model="data.Quantity" />
+                                                </td>
+                                                <td >
+                                                    <input type="number" disabled class="form-control" data-ng-model="data.Capacityofpersons" />
+                                                </td>
+                                                <td >
+                                                    <input type="number" disabled class="form-control"  data-ng-model="data.M2"   />
+                                                </td>
+                                                <td >
+                                                    <input type="number" disabled class="form-control"  data-ng-model="data.Tarifperhour" />
+                                                </td>
+                                                <td >
+                                                    <input type="number" disabled class="form-control" data-ng-model="data.Tarifperhalfday" />
+                                                </td>
+                                                <td >
+                                                    <input type="number" disabled class="form-control" data-ng-model="data.Tarifperday" />
+                                                </td>
+                                                <td >
+                                                    <input type="number"  disabled  class="form-control" data-ng-model="data.Tarifpermonth" />
+                                                </td>
+                                            </tr>
+                                        </table> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label>Opening hours:</label><br/>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="overflow-x: auto;">
+                                        <table class="table table-hover" >
+                                            <tr >
+                                                <th data-ng-repeat="day in spaceShareListOpp.spaceView.openingHours">{{day.Day}}</th>
+                                            </tr>
+                                            <tr   style="height: 10%; overflow-y: auto ">
+                                                <td data-ng-repeat="day in spaceShareListOpp.spaceView.openingHours">
+                                                    {{day.startFrom}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td data-ng-repeat="day in spaceShareListOpp.spaceView.openingHours">
+                                                    <label data-ng-if="day.upTo !== null && day.startFrom !== null">To</label>
+                                                    <label data-ng-if="day.upTo === null && day.startFrom === null" class="text-danger">Close</label>
+                                                </td>
+                                            </tr>
+                                            <tr >
+                                                <td data-ng-repeat="day in spaceShareListOpp.spaceView.openingHours">
+                                                    {{day.upTo}}
+                                                </td>
+                                            </tr>
+                                        </table> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="RegisterSpace" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    Register Space
+                </div>
+                <div class="modal-body">
+                    <form class="smart-form contactus_form"   name="registrationForm" role="form" ng-submit="registrationForm.$valid && registerSpace(myForm)" novalidate>
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 ">
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                                    <input class="form-control" name="firstName" data-ng-model="registrationData.registration.FirstName" placeholder="First Name" type="text" required/>
+                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                        <span class="text-danger" ng-if="registrationForm.firstName.$invalid && registrationForm.$submitted">The Field is required.</span>
+                                    </div> 
+                                </div>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                                    <input class="form-control" name="lastName" data-ng-model="registrationData.registration.LastName" placeholder="Last Name" type="text" required/>
+                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                        <span class="text-danger" ng-if="registrationForm.lastName.$invalid && registrationForm.$submitted">The Field is required.</span>
+                                    </div> 
+                                </div>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                                    <input class="form-control" name="spaceName" data-ng-model="registrationData.registration.SpaceName" placeholder="Space Name" type="text" required/>
+                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                        <span class="text-danger" ng-if="registrationForm.spaceName.$invalid && registrationForm.$submitted">The Field is required.</span>
+                                    </div> 
+                                </div>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                                    <datepicker class="input-group" date-format="MM-dd-yyyy" date-min-limit="todayDate">
+                                        <input class="form-control" data-ng-change="checkDate()" ng-model="registrationData.registration.spaceDate" placeholder="Space Date" name="spaceDate" required type="text"/>
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                        <span class="text-danger" ng-if="myForm.spaceDate.$invalid && myForm.$submitted">The Field is required.</span>
+                                    </datepicker>
+                                </div>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 ">
+                                    <div class="clockpicker" data-autoclose="true" ng-model="registrationData.registration.FromTime">
+                                        <input type="text" class="form-control" data-ng-disabled="!registrationData.registration.spaceDate||closed" name="time" ng-blur="Time(0)" placeholder="Select From Time" ng-disabled="hour.Disable"    >
+                                       <br/>
+                                        <span class="text-danger" ng-if="registrationForm.time.$invalid && registrationForm.$submitted">The Field is required.</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 ">
+                                    <span class="title">To</span>
+                                </div>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 ">
+                                    <div class="clockpicker" data-autoclose="true" ng-model="registrationData.registration.ToTime">
+                                        <input type="text" class="form-control" data-ng-disabled="!registrationData.registration.spaceDate||closed" name="time" ng-blur="Time(1)" placeholder="Select From Time" ng-disabled="hour.Disable"    >
+                                       <br/>
+                                        <span class="text-danger" ng-if="registrationForm.time.$invalid && registrationForm.$submitted">The Field is required.</span>
+                                    </div>
+                                </div>
+                                <div data-ng-if="incorrectTime">
+                                    <span class="text-danger">Please  Enter Correct Time</span>
+                                </div>
+                                <div data-ng-if="invalidTime">
+                                    <span class="text-danger">Please Select Valid Time</span>
+                                </div>
+                                <div data-ng-if="closed">
+                                    <span class="text-danger">This Day Space is closed</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                            <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success pull-right" style="margin-right: 5px;" >Register</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    .popover.clockpicker-popover{
+        z-index: 1050;
+    }
+    table{
+        border-collapse: collapse!important;
+        border-spacing: 0!important;
+        width: 100%!important;
+        border: 1px solid #ddd!important;
+    }
+    td,th,tr{
+        border:1px gray solid!important; 
+    }
+    .title {
+        color: grey;
+    }
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 300px;
+        margin: auto;
+        text-align: center;
+        font-family: arial;
+        background-color:whitesmoke;
+    }
+
+    .title {
+        color: grey;
+        font-size: 18px;
+    }
+
+
+    a {
+        text-decoration: none;
+        font-size: 22px;
+        color: black;
+    }
+
+    button:hover, a:hover {
+        opacity: 0.7;
+    }
+</style>
+
+<script>
+            debugger;
+            var slideIndex = 1;
+            showDivs(slideIndex);
+
+            function plusDivs(n) {
+                showDivs(slideIndex += n);
+            }
+
+            function showDivs(n) {
+                var i;
+                var x = document.getElementsByClassName("mySlides");
+                if (n > x.length) {
+                    slideIndex = 1
+                }
+                if (n < 1) {
+                    slideIndex = x.length
+                }
+                for (i = 0; i < x.length; i++) {
+                    x[i].style.display = "none";
+                }
+                x[slideIndex - 1].style.display = "block";
+            }
+</script>

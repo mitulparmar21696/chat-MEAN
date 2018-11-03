@@ -1,0 +1,28 @@
+<div class="mb-10" ng-init="init()">
+    <form class="smart-form contactus_form"   name="LoginForm" role="form" ng-submit="LoginForm.$valid && doLogin(myForm)" novalidate>
+        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+            <input class="form-control" name="username" data-ng-model="registrationData.loginData.userName" placeholder="User name" type="text" required/>
+            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                <span class="text-danger" ng-if="LoginForm.username.$invalid && LoginForm.$submitted">The Field is required.</span>
+            </div> 
+        </div>
+        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+            <input class="form-control" data-ng-model="registrationData.loginData.password" name="password" placeholder="Password" type="password" required/>
+            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                <span class="text-danger" ng-if="LoginForm.password.$invalid && LoginForm.$submitted">The Field is required.</span>
+            </div> 
+        </div>
+        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+            <span data-ng-if="incorrect" class="text-danger" data-ng-bind="msg"></span>
+        </div>
+        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+            <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success pull-right" style="margin-right: 5px;" >Login</button>
+        </div>
+    </form>
+    	<button g-login type="button">Google</button>
+	<button linked-in type="button">LinkedIn</button>
+	<button fb-login type="button">facebook</button>
+	<button ng-click="signout()" type="button">signout</button>
+	<h4>result: {{result}}</h4>
+</div>  

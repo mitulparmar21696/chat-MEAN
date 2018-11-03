@@ -1,0 +1,176 @@
+<script src="https://use.fontawesome.com/45e03a14ce.js"></script>
+<div ng-controller="chatCtrl">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-init="init()">
+        <div class="main_section">
+            <div class="chat_container">
+                <div class="col-sm-3 chat_sidebar">
+                    <div class="row">
+                        <div id="custom-search-input">
+                            <div class="input-group col-md-12">
+                                <input type="text" class="  search-query form-control" ng-model="title.user_json.first_name"placeholder="Conversation" />
+                                <button class="btn btn-danger" type="button">
+                                    <span class=" glyphicon glyphicon-search"></span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="member_list">
+                            <ul class="list-unstyled" ng-repeat="user in user.userList|filter:title">
+                                <li class="left clearfix " ng-class="{'activeChat':user._id === chatId}" ng-click="chatUser(user, 0)">
+                                    <span class="chat-img pull-left">
+                                        <img src="http://127.0.0.1:8090/getUserImage/{{user._id}}" alt="" class="img-circle">
+                                    </span>
+                                    <div class="chat-body clearfix">
+                                        <div class="header_sec">
+                                            <strong class="primary-font" >{{user.user_json.first_name}}&nbsp;{{user.user_json.last_name}}</strong> <strong class="pull-right">
+                                                09:45AM</strong>
+                                        </div>
+                                        <div class="contact_sec">
+                                            <span class="badge pull-right" ng-if="user.msgCount>0">{{user.msgCount}}</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul class="list-unstyled" ng-repeat="grp in user.groups">
+                                <li class="left clearfix " ng-class="{'activeChat':grp._id === chatId}"  ng-click="chatUser(grp, 1)">
+                                    <span class="chat-img pull-left">
+                                        <img src="http://www.planwallpaper.com/static/images/desktop-year-of-the-tiger-images-wallpaper.jpg" alt="User Avatar" class="img-circle">
+                                    </span>
+                                    <div class="chat-body clearfix">
+                                        <div class="header_sec">
+                                            Group:<strong class="primary-font">{{grp.groupName}}</strong> <strong class="pull-right">
+                                                09:45AM</strong>
+                                        </div>
+                                        <div class="contact_sec">
+                                             <span class="badge pull-right" ng-if="grp.msgCount>0">{{grp.msgCount}}</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--chat_sidebar-->
+                <div class="col-sm-9 message_section">
+                    <div class="row">
+                        <div class="new_message_head">
+                            <div class="pull-left">
+                                <button ng-click="createModal()"> 
+                                    <i class="fa fa-plus-square-o" aria-hidden="true" ></i> New Group
+                                </button>
+                            </div>
+                            <div class="pull-right">
+                                <button  ng-if="group" ng-click="addMember()" class="dropdown-toggle" type="button" >
+                                    add Member
+                                </button>
+                                <button  ng-if="!group && !isBlock" ng-click="blockMember();" class="dropdown-toggle" type="button" >
+                                    Block 
+                                </button>
+                                <button  ng-if="!group && isBlock" ng-click="unBlockMember();" class="dropdown-toggle" type="button" >
+                                    Un-Block 
+                                </button>
+                                <button  ng-if="!group && !isSpam" ng-click="spam();" class="dropdown-toggle" type="button" >
+                                    Spam 
+                                </button>
+                                <button  ng-if="!group && isSpam" ng-click="unspam();" class="dropdown-toggle" type="button" >
+                                    Un-Spam 
+                                </button>
+                            </div>
+                        </div><!--new_message_head-->
+
+                        <div class="chat_area">
+                            <ul class="list-unstyled" id="autoscroll" ng-repeat="msg in user.messageHistory">
+                                <li class="left clearfix " id="msg5a1e635503728a2095c8aa84" ng-disabled="block">
+
+                                    <span class="chat-img1 " ng-if="!group" ng-class="{'pull-left':user.currentUser._id === msg.to_user,'pull-right':user.currentUser._id === msg.from_user}">
+                                        <img src="http://127.0.0.1:8090/getUserImage/{{msg.from_user}}" ng-if="user.currentUser._id === msg.to_user" alt="User Avatar" class="img-circle">
+                                        <img src="http://127.0.0.1:8090/getUserImage/{{msg.from_user}}" ng-if="user.currentUser._id === msg.from_user" alt="User Avatar" class="img-circle">
+                                    </span>
+                                    <span class="chat-img1 " ng-if="group" ng-class="{'pull-left':user.currentUser._id !== msg.from_user,'pull-right':user.currentUser._id === msg.from_user}">
+
+                                        <img src="http://127.0.0.1:8090/getUserImage/{{msg.from_user}}"  alt="User Avatar" class="img-circle">
+                                    </span>
+                                    <div class="chat-body1 clearfix">
+                                        <p>{{msg.message}}</p>
+                                        <div class="chat_time " ng-class="{'pull-right':user.currentUser._id === msg.to_user,'pull-left':user.currentUser._id === msg.from_user}">
+                                            {{msg.date| date:"MM/dd/yyyy 'at' h:mma"}}&nbsp;
+                                            <span ng-bind="msg.username" ng-if="group"></span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div><!--chat_area-->
+                        <div class="message_write">
+                            <textarea class="form-control" ng-model="Message" placeholder="type a message"></textarea>
+                            <div class="clearfix"></div>
+                            <div class="chat_bottom"><a href="#" class="pull-left upload_btn"><i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                                    Add Files</a>
+                                <a ng-click="sendMessage()" class="pull-right btn btn-success">
+                                    Send</a></div>
+                        </div>
+                    </div>
+                </div> <!--message_section-->
+            </div>
+        </div>
+    </div>
+    <div id="createModal" class="modal fade" role="dialog">
+        <form class="smart-form contactus_form"   name="groupForm" role="form" ng-submit="groupForm.$valid && saveGroup(myForm)" novalidate>
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        Registration
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 col-xs-12">
+                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                                <input class="form-control" data-ng-model="groupName" name="stateName" placeholder="Group Name" type="text" required/>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <span class="text-danger" ng-if="groupForm.stateName.$invalid && groupForm.$submitted">The Field is required.</span>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                            <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success pull-right" style="margin-right: 5px;" >Create</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="addMemberModel" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    Add Member to group
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                            <ul class="list-group" ng-repeat="user in user.groupMember">
+                                <li class="list-group-item">
+                                    <span ng-bind="user.user_json.first_name"></span>&nbsp;
+                                    <span ng-bind="user.user_json.last_name"></span>
+                                    <span class="pull-right">
+                                        <i class="fa fa-plus" ng-click="addToGroup(user, $index)"></i>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                        <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+</div>

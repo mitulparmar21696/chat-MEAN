@@ -1,0 +1,134 @@
+<div data-ng-init="init()" ng-controller="userListCtrl">
+    <h1 data-ng-bind="msg"> </h1>
+    <div class="col-lg-12 col-sm-12  col-md-12 form-group">
+        <div class=" col-lg-12 col-sm-12  col-md-12  well" >
+            <h2 style="padding-top: 0px; padding-bottom: 0px; margin-bottom: 0px; color: white" class="text-center">Share Jobs</h2>
+        </div>
+    </div>
+    <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 form-group ">
+        <form class="smart-form contactus_form"   name="myForm" role="form" ng-submit="myForm.$valid && postJob(myForm)" novalidate>
+            <div class="col-lg-12 col-sm-12  col-md-12  well">
+                <div class="col-sm-6 col-lg-6 col-md-6 form-group">
+                    <label >Title </label>
+                    <input type="text" name="title" placeholder="What are you looking for?" class="form-control" data-ng-model="registrationData.register.jobTitle" required/>
+                    <span class="text-danger" ng-if="myForm.title.$invalid && myForm.$submitted">The Field is required.</span>
+                </div>
+                <div class="col-sm-6 col-lg-6 col-md-6  form-group">
+                    <label>Job Type</label>
+                    <select class="form-control" name="jobtype"   ng-options="c as c.name for c in jobDetails.jobType" required  data-ng-model="registrationData.register.jobType">
+                        <option value="">Select Job Type</option>
+                        <option >{{'name'}}</option>
+                    </select>
+                    <span class="text-danger" ng-if="myForm.jobtype.$invalid && myForm.$submitted">The Field is required.</span>
+                </div>
+                <div class="col-sm-6 col-lg-6 col-md-6  form-group">
+                    <label>Industry Type</label>
+                    <select class="form-control" name="jobindustry"   ng-options="c as c.name for c in jobDetails.jobIndustry" required  data-ng-model="registrationData.register.jobIndustry">
+                        <option value="">Select Job Industry</option>
+                        <option >{{'name'}}</option>
+                    </select>
+                    <span class="text-danger" ng-if="myForm.jobindustry.$invalid && myForm.$submitted">The Field is required.</span>
+                </div>
+                <div class="col-sm-6 col-lg-6 col-md-6  form-group">
+                    <label>Work Schedule</label>
+                    <select class="form-control" name="workschedule"   ng-options="c as c.name for c in jobDetails.jobDesignation" required  data-ng-model="registrationData.register.jobDesignation">
+                        <option value="">Select Work Schedule</option>
+                        <option >{{'name'}}</option>
+                    </select>
+                    <span class="text-danger" ng-if="myForm.workschedule.$invalid && myForm.$submitted">The Field is required.</span>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                    <label>Description</label>
+                    <textarea class="form-control" required  name="description" placeholder="What are the requirements and details of the job?" rows="5" data-ng-model="registrationData.register.jobDescription"></textarea>
+                    <span class="text-danger" ng-if="myForm.description.$invalid && myForm.$submitted">The Field is required.</span>
+                </div>
+                <div class="col-sm-6 col-lg-6 col-md-6 form-group">
+                    <label>Flex Work Type</label>
+                    <select class="form-control" name="flexwork"   ng-options="c as c.name for c in jobDetails.jobFlexWorkType" required  data-ng-model="registrationData.register.jobFlexWorkType">
+                        <option value="">Select Your Flex Work Type</option>
+                        <option >{{'name'}}</option>
+                    </select>
+                    <span class="text-danger" ng-if="myForm.flexwork.$invalid && myForm.$submitted">The Field is required.</span>
+                </div>
+                <div class="col-sm-6 col-lg-6 col-md-6  form-group">
+                    <label>Job Category</label>
+                    <select class="form-control" name="jobcategory"   ng-options="c as c.name for c in jobDetails.jobCategory" required  data-ng-model="registrationData.register.jobCategory">
+                        <option value="">Select Job Category</option>
+                        <option >{{'name'}}</option>
+                    </select>
+                    <span class="text-danger" ng-if="myForm.jobcategory.$invalid && myForm.$submitted">The Field is required.</span>
+                </div>
+                <div class="col-sm-12 col-lg-12 col-md-12 form-group">
+                    <label >Job Shared by </label>
+                    <div class="form-group">
+                        <input type="radio" ng-model="registrationData.register.sharedBy" value="Personnal profile">Personnal profile
+                        <input type="radio" ng-model="registrationData.register.sharedBy" value="Company">Company
+                    </div>
+                </div>
+                <div class="col-sm-12 col-lg-12 col-md-12 form-group">
+                    <label >Main Address of the job </label>
+                    <div class="form-group">
+                        <input type="text" required vs-google-autocomplete ng-model="registrationData.register.address" name="address"  class="form-control">
+                        <span class="text-danger" ng-if="myForm.address.$invalid && myForm.$submitted">The Field is required.</span>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-6 col-md-6 form-group">
+                    <label >Date of Vacancy </label>
+
+                    <datepicker class="input-group" date-format="MM-dd-yyyy" date-min-limit="todayDate">
+                        
+                        <input class="form-control" ng-model="registrationData.register.vacancyDates" placeholder="Vacancy Date" name="availabledate" required type="text"/>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                        <span class="text-danger" ng-if="myForm.availabledate.$invalid && myForm.$submitted">The Field is required.</span>
+                    </datepicker>
+
+                </div>
+
+                <div class="col-sm-6 col-lg-6 col-md-6 form-group">
+                    <label >Accessible for Handicap </label>
+                    <div class=" form-group">
+                        <input type="radio" ng-model="registrationData.register.accessToHandicap" value="Yes">Yes
+                        <input type="radio" ng-model="registrationData.register.accessToHandicap" value="No">No
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-6 col-md-6 form-group">
+                    <label>Job Compensation</label>
+                    <select class="form-control" name="jobCompensation"   ng-options="c as c.name for c in jobDetails.jobCompensation" required  data-ng-model="registrationData.register.jobCompensation">
+                        <option value="">Select Job Compensation</option>
+                        <option >{{'name'}}</option>
+                    </select>
+                    <span class="text-danger" ng-if="myForm.jobCompensation.$invalid && myForm.$submitted">The Field is required.</span>
+                </div>
+                <div class="col-sm-6 col-lg-6 col-md-6 form-group">
+                    <label>Currency</label>
+                    <select class="form-control" name="currency"   ng-options="c as c.name for c in currency.countryCurrency" required  data-ng-model="registrationData.register.currency">
+                        <option value="">Select Currency</option>
+                        <option >{{'name'}}</option>
+                    </select>
+                    <span class="text-danger" ng-if="myForm.currency.$invalid && myForm.$submitted">The Field is required.</span>
+                </div>
+                <div class="col-sm-6 col-lg-6 col-md-6 form-group">
+                    <label>Job Experience</label>
+                    <select class="form-control" name="jobexperience"   ng-options="c as c.name for c in jobDetails.jobExperience" required  data-ng-model="registrationData.register.jobExperience">
+                        <option value="">Select Job Experience</option>
+                        <option >{{'name'}}</option>
+                    </select>
+                    <span class="text-danger" ng-if="myForm.jobexperience.$invalid && myForm.$submitted">The Field is required.</span>
+                </div>
+                <div class="col-sm-6 col-lg-6 col-md-6 form-group">
+                    <label>Job Qualification</label>
+                    <select class="form-control" name="jobqualification"   ng-options="c as c.name for c in jobDetails.jobQualification" required  data-ng-model="registrationData.register.jobQualification">
+                        <option value="">Select Job Qualification</option>
+                        <option >{{'name'}}</option>
+                    </select>
+                    <span class="text-danger" ng-if="myForm.jobqualification.$invalid && myForm.$submitted">The Field is required.</span>
+                </div>
+                <div class="col-sm-12 col-lg-12 col-md-12 form-group text-center">
+                    <button type="submit" class="btn btn-success ">Post a Job</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

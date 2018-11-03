@@ -1,0 +1,101 @@
+<div class="mb-10"  ng-controller="dashBoardCtrl">
+    <div ng-init="init()">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>                        
+                    </button>
+                    <a class="navbar-brand" >SkWaire</a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown" ng-class="{'active':templates.shareSpaceList || templates.shareSpaceAdd || templates.spaceFiltersConfig}">
+                            <a class="dropdown-toggle" data-toggle="dropdown">Space<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li ng-class="{'active':templates.shareSpaceList}"><a ng-click="openSpaceList()">Space List</a></li>
+                                <li ng-class="{'active':templates.shareSpaceAdd}"><a ng-click="openShareSpaceFrom()">Share a space</a></li>
+                                <li ng-class="{'active':templates.spaceFiltersConfig}"><a ng-click="spaceConfig()">space Filter</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown" ng-class="{'active':templates.userList || templates.userFilters }">
+                            <a class="dropdown-toggle" data-toggle="dropdown">Users<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li ng-class="{'active':templates.userList}"><a ng-click="UserList()">User List</a></li>
+                                <li ng-class="{'active':templates.userFilters}"><a ng-click="openShareSpaceFrom()">Users Filters</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown" ng-class="{'active':templates.chat}">
+                            <a class="dropdown-toggle" data-toggle="dropdown">Conversation<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li ng-class="{'active':templates.chat}"><a ng-click="chat()">chat</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li ng-click="registrationClick()"><a><span class="glyphicon glyphicon-registration-mark"></span> Registration</a></li>
+                        <li ng-click="logOut()"><a><span class="glyphicon glyphicon-log-in"></span> Log Out</a></li>
+                        <li ng-click="userProfile()"><a><span class="glyphicon glyphicon-user"></span> </a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div ng-include="'templates/share-list.html'" ng-if="templates.shareSpaceList"></div>
+        <div ng-include="'templates/share-space.html'" ng-if="templates.shareSpaceAdd"></div>
+        <div ng-include="'templates/space-filters-config.html'" ng-if="templates.spaceFiltersConfig"></div>
+        <div ng-include="'templates/user-list.html'" ng-if="templates.userList"></div>
+        <div ng-include="'templates/chat.html'" ng-if="templates.chat"></div>
+        <div ng-include="'templates/user-profile.html'" ng-if="templates.userProfile"></div>
+    </div>
+    <!--Registration-->
+    <div id="registrationModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    Registration
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 col-xs-12">
+                        <form class="smart-form contactus_form"   name="registrationForm" role="form" ng-submit="registrationForm.$valid && doLogin(myForm)" novalidate>
+                            <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                <select class="form-control" name="country"    ng-options="c as c.name for c in countries.country" required  data-ng-model="spaceForm.country">
+                                    <option value="">Please Select Country</option>
+                                    <option >{{'name'}}</option>
+                                </select>
+                                <span class="text-danger" ng-if="registrationForm.country.$invalid && registrationForm.$submitted">The Field is required.</span>
+                            </div>
+                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                                <input class="form-control" data name="zipCode" ng-blur="getCityState(registrationData.cityData.zipCode)" data-ng-model="registrationData.cityData.zipCode" placeholder="Pin Code" type="text" required/>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <span class="text-danger" ng-if="registrationForm.zipCode.$invalid && registrationForm.$submitted">The Field is required.</span>
+                                </div> 
+                            </div>
+                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                                <input class="form-control" data-ng-model="registrationData.cityData.cityName" name="cityName" placeholder="City Name" type="text" required/>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <span class="text-danger" ng-if="registrationForm.cityName.$invalid && registrationForm.$submitted">The Field is required.</span>
+                                </div> 
+                            </div>
+                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                                <input class="form-control" data-ng-model="registrationData.cityData.stateName" name="stateName" placeholder="State Name" type="text" required/>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <span class="text-danger" ng-if="registrationForm.stateName.$invalid && registrationForm.$submitted">The Field is required.</span>
+                                </div> 
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                        <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success pull-right" style="margin-right: 5px;" >Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>  

@@ -1,0 +1,130 @@
+<div class="mb-10" ng-init="init()">
+    <div class="navbar navbar-default navbar-fixed-top" >
+        <div class="navbar-header">
+            <div class="container">
+                <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target="sidebar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Demo Project</a>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row row-offcanvas row-offcanvas-left">
+                <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" >
+                    <ul class="nav">
+                        <li ng-if="logReg" class="active"><a ng-click="openRegistration()">Registration</a></li>
+                        <li ng-if="logReg"><a data-ng-click="login()">Login</a></li>
+                        <li ng-if="!logReg"><a data-ng-click="userList()">Add Share Job</a></li>
+                        <li ng-if="!logReg"><a data-ng-click="shareJobList()">Share-Job-List</a></li>
+                        <li ng-if="!logReg"><a data-ng-click="shareSpace()">Share Space</a></li>
+                        <li ng-if="!logReg"><a data-ng-click="shareSpaceList()">Share Space List</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--register modal-->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    Register
+                </div>
+                <div class="modal-body">
+                    <form class="smart-form contactus_form"   name="myForm" role="form" ng-submit="myForm.$valid && save(myForm)" novalidate>
+                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                            <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+                                <input class="form-control" name="firstname" data-ng-model="registrationData.register.FirstName" placeholder="First Name" type="text" required/>  
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <span class="text-danger" ng-if="myForm.firstname.$invalid && myForm.$submitted">The Field is required.</span>
+                                </div> 
+                            </div>
+                            <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+                                <input class="form-control" data-ng-model="registrationData.register.LastName" name="lastname" placeholder="Last Name" type="text" required/>  
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <span class="text-danger" ng-if="myForm.lastname.$invalid && myForm.$submitted">The Field is required.</span>
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                <input class="form-control" data-ng-model="registrationData.register.userName" name="email" placeholder="User name" type="text" required/>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <span class="text-danger" ng-if="myForm.email.$invalid && myForm.$submitted">The Field is required.</span>
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                            <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+                                <input class="form-control" ng-change="pwCheck()" data-ng-model="registrationData.register.password" name="password" placeholder="Password" type="password" required/>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <span class="text-danger" ng-if="myForm.password.$invalid && myForm.$submitted">The Field is required.</span>
+                                </div> 
+                            </div>
+                            <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+                                <input class="form-control" ng-change="pwCheck()" data-ng-model="registrationData.register.confirmPassword" name="confirmpassword" placeholder="Confirm Password" ng-match="registrationData.register.password" required type="password"/>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <span class="text-danger" ng-if="myForm.confirmpassword.$invalid && myForm.$submitted">The Field is required.</span>
+                                    <span data-ng-show="pwdFlag" class="text-danger">Password have to match!</span>
+                                </div> 
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+
+                                <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success pull-right"  style="margin-right: 5px;">save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--Login modal-->
+    <div id="login" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    Login
+                </div>
+                <div class="modal-body">
+                    <form class="smart-form contactus_form"   name="LoginForm" role="form" ng-submit="LoginForm.$valid && doLogin(myForm)" novalidate>
+                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                            <input class="form-control" name="username" data-ng-model="registrationData.loginData.userName" placeholder="User name" type="text" required/>
+                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                <span class="text-danger" ng-if="LoginForm.username.$invalid && LoginForm.$submitted">The Field is required.</span>
+                            </div> 
+                        </div>
+                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                            <input class="form-control" data-ng-model="registrationData.loginData.password" name="password" placeholder="Password" type="password" required/>
+                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                <span class="text-danger" ng-if="LoginForm.password.$invalid && LoginForm.$submitted">The Field is required.</span>
+                            </div> 
+                        </div>
+                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                            <span data-ng-if="incorrect" class="text-danger" data-ng-bind="msg"></span>
+                        </div>
+                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                            <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success pull-right" style="margin-right: 5px;" >Login</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>  

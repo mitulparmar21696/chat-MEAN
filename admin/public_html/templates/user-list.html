@@ -1,0 +1,96 @@
+<div class="mb-10" data-ng-controller="userListController">
+    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" data-ng-init="init()">
+      
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Plan Type</th>
+                    <th>Number Of Job</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="user in user.userList" data-ng-if="user.user_json.role !== 'Admin'">
+                    <td><a data-ng-click="editPlanDetail(user)">{{user.user_json.first_name}}&nbsp;{{user.user_json.last_name}}</a></td>
+                    <td>{{user.user_json.planDetails.Name}}</td>
+                    <td>{{user.user_json.planDetails.Job}}</td>
+                    <td>{{user.user_json.email}}</td>
+                    <td>{{user.user_json.phone_number}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="planDetails" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    Registration
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 col-xs-12">
+                        <form class="smart-form contactus_form"   name="jobForm" role="form" ng-submit="jobForm.$valid && updatePlanDetails(myForm)" novalidate>
+                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                                <span class="title">Name:</span>&nbsp;<span class="title">{{jobData.job.user_json.first_name}}&nbsp;{{jobData.job.user_json.last_name}}</span> <br/>
+                                <span class="title">Email:</span>&nbsp;<span class="title">{{jobData.job.user_json.email}}</span><br/>
+                                <span class="title">Number:</span>&nbsp;<span class="title">{{jobData.job.user_json.phone_number}}</span>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="title">Jobs</label>
+                                <input class="form-control" data-ng-model="jobData.job.user_json.planDetails.Job" name="allowedJob" placeholder="State Name" type="text" required/>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <span class="text-danger" ng-if="jobForm.allowedJob.$invalid && jobForm.$submitted">The Field is required.</span>
+                                </div> 
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="title">Workspaces</label>
+                                <input class="form-control" data-ng-model="jobData.job.user_json.planDetails.Workspaces" name="allowedJob" placeholder="State Name" type="text" required/>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <span class="text-danger" ng-if="jobForm.allowedJob.$invalid && jobForm.$submitted">The Field is required.</span>
+                                </div> 
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="title">Events</label>
+                                <input class="form-control" data-ng-model="jobData.job.user_json.planDetails.Events" name="allowedJob" placeholder="State Name" type="text" required/>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <span class="text-danger" ng-if="jobForm.allowedJob.$invalid && jobForm.$submitted">The Field is required.</span>
+                                </div> 
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="title">Communities</label>
+                                <input class="form-control" data-ng-model="jobData.job.user_json.planDetails.Communities" name="allowedJob" placeholder="State Name" type="text" required/>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <span class="text-danger" ng-if="jobForm.allowedJob.$invalid && jobForm.$submitted">The Field is required.</span>
+                                </div> 
+                            </div>
+                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                                <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success pull-right" style="margin-right: 5px;" >Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<style>
+    table{
+        border-collapse: collapse!important;
+        border-spacing: 0!important;
+        width: 100%!important;
+        border: 1px solid #ddd!important;
+    }
+    td,th,tr{
+        border:1px gray solid!important; 
+    }
+    .title {
+        color: grey;
+    }
+</style>

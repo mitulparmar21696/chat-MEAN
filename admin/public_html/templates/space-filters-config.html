@@ -1,0 +1,234 @@
+<div ng-controller="shareSpaceConfigCtrl" >
+    <div data-ng-init="init()">
+        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 ">
+            <ul class="nav nav-tabs">
+                <li  data-ng-class="{'active':myConfig.typeOfSpace}" data-ng-click="typeSpaceTab()"><a >Type Of Space</a></li>
+                <li data-ng-class="{'active':myConfig.categoryOfSpace}" data-ng-click="categoryTab()"><a >Category of space</a></li>
+                <li data-ng-class="{'active':myConfig.facilitiesOfSpace}" data-ng-click="facilitySpaceTab()"><a >Facilities</a></li>
+            </ul>
+        </div>
+        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 " style="margin-top: 10px; ">
+            <div class="tab-content">
+                <!--Share Space Type -->
+                <div id="typeOfSpace1" data-ng-if="myConfig.typeOfSpace" class="tab-pane fade in active">
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 form-group">
+                            <button class="btn btn-primary pull-right" data-ng-click="addTypeOfSpace()">New</button>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12 " data-ng-if="addType">
+                        <form class="smart-form contactus_form"   name="typeForrm" role="form" ng-submit="typeForrm.$valid && saveType(myForm)" novalidate>
+                            <div class="col-lg-6 col-sm-12 col-md-6 col-xs-12 form-group">
+                                <input class="form-control" name="english" data-ng-model="shareSpaceData.type.englishName" placeholder="English name" type="text" required/>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <span class="text-danger" ng-if="typeForrm.english.$invalid && typeForrm.$submitted">The Field is required.</span>
+                                </div> 
+                            </div>
+                            <div class="col-lg-6 col-sm-12 col-md-6 col-xs-12 form-group">
+                                <input class="form-control" data-ng-model="shareSpaceData.type.frenchName" name="french" placeholder="French Name" type="text" required/>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <span class="text-danger" ng-if="typeForrm.french.$invalid && typeForrm.$submitted">The Field is required.</span>
+                                </div> 
+                            </div>
+                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                                <button type="button" class="btn btn-default pull-right" data-ng-click="addTypeOfSpace()">Close</button>
+                                <button type="submit" class="btn btn-success pull-right" style="margin-right: 5px;" >Save</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 input-group">
+                            <input type="search" class="form-control" placeholder="Search" data-ng-model="title.englishName"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th class="text-center form-group">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="data in shareSpaceData.typeData|filter:title">
+                                    <td><a>{{data.englishName}}</a></td>
+                                    <td class="text-center form-group" >
+                                        <span class="form-group " style="margin-right: 10px;cursor:pointer!important;"><i class="fa fa-edit" data-ng-click="editTypeOfSpace(data)"></i></span>
+                                        <span class="form-group"><i class="fa fa-trash-o" data-ng-click="deleteSpaceType(data, $index)" style="cursor:pointer!important;"></i></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>    
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " data-ng-if="shareSpaceData.typeData.length === 0 ||(shareSpaceData.typeData|filter:title).length === 0">
+                        <ul class="list-group">
+                            <li class="text-center list-group-item">
+                                No Data(s) Found
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--Share Space Category-->
+                <div id="categoryOfSpace1"  data-ng-if="myConfig.categoryOfSpace" class="tab-pane fade in active">
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 form-group">
+                            <button class="btn btn-primary pull-right" data-ng-click="addTypeOfCategory()">New</button>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12 " data-ng-if="addCategory">
+                        <form class="smart-form contactus_form"   name="categoryForm" role="form" ng-submit="categoryForm.$valid && saveCategory(myForm)" novalidate>
+                            <div class="col-lg-6 col-sm-12 col-md-6 col-xs-12 form-group">
+                                <input class="form-control" name="english" data-ng-model="category.catData.englishName" placeholder="English name" type="text" required/>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <span class="text-danger" ng-if="categoryForm.english.$invalid && categoryForm.$submitted">The Field is required.</span>
+                                </div> 
+                            </div>
+                            <div class="col-lg-6 col-sm-12 col-md-6 col-xs-12 form-group">
+                                <input class="form-control" data-ng-model="category.catData.frenchName" name="french" placeholder="French Name" type="text" required/>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <span class="text-danger" ng-if="categoryForm.french.$invalid && categoryForm.$submitted">The Field is required.</span>
+                                </div> 
+                            </div>
+                            <div class="col-lg-6 col-sm-12 col-md-6 col-xs-12 form-group" data-ng-if="myImage === null">
+                                <input 
+                                    type="file" 
+                                    ngf-select 
+                                    ng-model="category.catData.file" 
+                                    name="file" 
+                                    ngf-pattern="'image/*'"
+                                    accept="image/*" 
+                                    ngf-max-size="20MB" 
+                                    required
+                                    />
+                                <i ng-show="upload_form.file.$error.required">*required</i><br>
+                                <i ng-show="upload_form.file.$error.maxSize">File too large 
+                                    {{file.size / 1000000|number:1}}MB: max 20M</i>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <span class="text-danger" ng-if="categoryForm.file.$invalid && categoryForm.$submitted">The Field is required.</span>
+                                </div> 
+                            </div>
+                            <div class="col-lg-6 col-sm-12 col-md-6 col-xs-12 form-group">
+                                <label >Tarif per month</label>
+                                <div class=" form-group">
+                                    <input type="radio" ng-model="category.catData.tarifPerMonth" value="Yes">Yes &nbsp;&nbsp;
+                                    <input type="radio" ng-model="category.catData.tarifPerMonth" value="No">No
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-sm-12 col-md-6 col-xs-12 form-group" data-ng-if="myImage !== null">
+                                <img src="data:image/jpeg;base64,{{myImage}}" width="100" height="100"/>
+                                <i class="fa fa-trash-o" data-ng-click="deleteCategoryImage(category.catData._id)"></i>
+                            </div>
+                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                                <button type="button" class="btn btn-default pull-right" data-ng-click="addTypeOfCategory()">Close</button>
+                                <button type="submit" class="btn btn-success pull-right" style="margin-right: 5px;" >Save</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 input-group">
+                            <input type="search" class="form-control" placeholder="Search" data-ng-model="title.englishName"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th class="text-center form-group">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="data in category.categoryList|filter:title">
+                                    <td><a>{{data.englishName}}</a></td>
+                                    <td class="text-center form-group" >
+                                        <span class="form-group " style="margin-right: 10px;cursor:pointer!important;"><i class="fa fa-edit" data-ng-click="editTypeOfCategory(data)"></i></span>
+                                        <span class="form-group"><i class="fa fa-trash-o" data-ng-click="deleteSpaceCategory(data, $index)" style="cursor:pointer!important;"></i></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " data-ng-if="category.categoryList.length === 0 ||(category.categoryList|filter:title).length === 0">
+                        <ul class="list-group">
+                            <li class="text-center list-group-item">
+                                No Data(s) Found
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!--Share Space Facilities-->
+                <div id="facilitiesOfSpace1" data-ng-if="myConfig.facilitiesOfSpace" class="tab-pane fade in active">
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 form-group">
+                            <button class="btn btn-primary pull-right" data-ng-click="addFacilityOfSpace()">New</button>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12 " data-ng-if="addFacility">
+                        <form class="smart-form contactus_form"   name="facilityForrm" role="form" ng-submit="facilityForrm.$valid && saveFacility(myForm)" novalidate>
+                            <div class="col-lg-6 col-sm-12 col-md-6 col-xs-12 form-group">
+                                <input class="form-control" name="english" data-ng-model="spaceFacilities.facility.englishName" placeholder="English name" type="text" required/>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <span class="text-danger" ng-if="facilityForrm.english.$invalid && facilityForrm.$submitted">The Field is required.</span>
+                                </div> 
+                            </div>
+                            <div class="col-lg-6 col-sm-12 col-md-6 col-xs-12 form-group">
+                                <input class="form-control" data-ng-model="spaceFacilities.facility.frenchName" name="french" placeholder="French Name" type="text" required/>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <span class="text-danger" ng-if="facilityForrm.french.$invalid && facilityForrm.$submitted">The Field is required.</span>
+                                </div> 
+                            </div>
+                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                                <button type="button" class="btn btn-default pull-right" data-ng-click="addFacilityOfSpace()">Close</button>
+                                <button type="submit" class="btn btn-success pull-right" style="margin-right: 5px;" >Save</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 form-group">
+                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 input-group">
+                            <input type="search" class="form-control" placeholder="Search" data-ng-model="title.englishName"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th class="text-center form-group">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="data in spaceFacilities.facilityList|filter:title">
+                                    <td><a>{{data.englishName}}</a></td>
+                                    <td class="text-center form-group" >
+                                        <span class="form-group " style="margin-right: 10px;cursor:pointer!important;"><i class="fa fa-edit" data-ng-click="editTypeOfFacility(data)"></i></span>
+                                        <span class="form-group"><i class="fa fa-trash-o" data-ng-click="deleteSpaceFacility(data, $index)" style="cursor:pointer!important;"></i></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> 
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-ng-if="spaceFacilities.facilityList.length === 0 ||(spaceFacilities.facilityList|filter:title).length === 0">
+                        <ul class="list-group">
+                            <li class="text-center list-group-item">
+                                No Data(s) Found
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    table{
+        border-collapse: collapse!important;
+        border-spacing: 0!important;
+        width: 100%!important;
+        border: 1px solid #ddd!important;
+    }
+    td,th,tr{
+        border:1px gray solid!important; 
+    }
+    .title {
+        color: grey;
+    }
+</style>
